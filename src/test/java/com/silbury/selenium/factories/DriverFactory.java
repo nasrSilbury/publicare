@@ -52,7 +52,7 @@ public class DriverFactory {
     {
         driverName = Constants.DriverName.valueOf(webDriverName.toUpperCase());
         
-        logger.debug("driverName ::::::::: "+driverName);
+        logger.debug("driverName :: "+driverName);
         driverType = DriverType.LOCAL;
         switch(driverName)
         {

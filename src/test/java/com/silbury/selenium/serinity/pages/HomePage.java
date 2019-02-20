@@ -159,7 +159,7 @@ public class HomePage extends PageObject {
 	}
 	
 	private void clickOnLanguageDropDown() {
-		System.out.println("lick on language dropdown");
+		
 		languageDropDown.click();
 		wait(Constants.WaitABit.TWO_SECONDS);	
 		

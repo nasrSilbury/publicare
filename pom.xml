@@ -5,16 +5,22 @@
     <groupId>com.publicare.selenium</groupId>
     <artifactId>publicare</artifactId>
     <version>1.0-SNAPSHOT</version>
-    <packaging>pom</packaging>
+    <packaging>jar</packaging>
 
     <name>Publicare</name>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <serenity.version>1.8.3</serenity.version>
-        <serenity.jbehave.version>1.34.0</serenity.jbehave.version>
+          <serenity.version>2.0.40</serenity.version> 
+       <!--   <serenity.version>1.8.3</serenity.version> -->
+        <serenity.maven.version>2.0.27</serenity.maven.version>
+        
+        <serenity.jbehave.version>1.44.0</serenity.jbehave.version>
         <webdriver.driver>chrome</webdriver.driver>
         <webdriver.chrome.driver>chromedriver.exe</webdriver.chrome.driver> 
+     
+      <acceptanceSourceDirectory>${basedir}/src/test</acceptanceSourceDirectory>
+      <acceptanceOutputDirectory>${basedir}/target/acceptance/test-classes</acceptanceOutputDirectory>
     </properties>
 
     <dependencies>
@@ -24,6 +30,21 @@
             <version>${serenity.version}</version>
             <scope>test</scope>
         </dependency>
+        <!-- <dependency>
+            <groupId>net.serenity-bdd</groupId>
+            <artifactId>serenity-junit</artifactId>
+            <version>${serenity.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>net.serenity-bdd</groupId>
+            <artifactId>serenity-screenplay</artifactId>
+            <version>${serenity.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>net.serenity-bdd</groupId>
+            <artifactId>serenity-screenplay-webdriver</artifactId>
+            <version>${serenity.version}</version>
+        </dependency> -->
         <dependency>
             <groupId>net.serenity-bdd</groupId>
             <artifactId>serenity-jbehave</artifactId>
@@ -49,10 +70,109 @@
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>2.19.1</version>
                 <configuration>
-                    <skip>true</skip>
+                   <!--  <skip>true</skip> -->
+                    <includes>
+                       <include>${acceptanceSourceDirectory}/java/**/*Test.java</include>
+                    </includes>
                 </configuration>
             </plugin>
+            
             <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-antrun-plugin</artifactId>
+                <version>1.8</version>
+                <executions>
+                    <execution>
+                        <id>create-directory</id>
+                        <phase>pre-integration-test</phase>
+                        <goals>
+                            <goal>run</goal>
+                        </goals>
+                        <configuration>
+                            <tasks>
+                                <echo message="Creating Directory ${acceptanceOutputDirectory}"/>
+                                <mkdir dir="${acceptanceOutputDirectory}"/>
+                            </tasks>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+             <groupId>org.codehaus.mojo</groupId>
+             <artifactId>build-helper-maven-plugin</artifactId>
+             <version>1.9.1</version>
+             <executions>
+                 <execution>
+                     <id>add-test-sources</id>
+                     <phase>pre-integration-test</phase>
+                     <goals>
+                         <goal>add-test-source</goal>
+                     </goals>
+                     <configuration>
+                         <sources>
+                             <source>${acceptanceSourceDirectory}/java</source>
+                         </sources>
+                     </configuration>
+                 </execution>
+                 <execution>
+                     <id>add-test-resources</id>
+                     <phase>pre-integration-test</phase>
+                     <goals>
+                         <goal>add-test-resource</goal>
+                     </goals>
+                     <configuration>
+                         <resources>
+                             <resource>
+                                 <directory>${acceptanceSourceDirectory}/java</directory>
+                                 <targetPath>${acceptanceOutputDirectory}</targetPath>
+                             </resource>
+                         </resources>
+                     </configuration>
+                 </execution>
+                 <execution>
+                     <id>add-empty-directory</id>
+                     <phase>pre-integration-test</phase>
+                     <goals>
+                         <goal>add-test-resource</goal>
+                     </goals>
+                     <configuration>
+                         <resources>
+                             <resource>
+                                 <directory>${acceptanceSourceDirectory}/java</directory>
+                                 <targetPath>${acceptanceOutputDirectory}</targetPath>
+                                 <excludes>
+                                     <exclude>**/*</exclude>
+                                 </excludes>
+                             </resource>
+                         </resources>
+                     </configuration>
+                 </execution>
+             </executions>
+         </plugin>
+         
+         <plugin>
+             <artifactId>maven-failsafe-plugin</artifactId>
+             <version>2.8</version>
+             <configuration>
+                 <testClassesDirectory>${acceptanceOutputDirectory}
+                 </testClassesDirectory>
+                 <reportsDirectory>${acceptanceOutputDirectory}/failsafe-reports
+                 </reportsDirectory>
+                 <test>**/*.java</test>
+                 <additionalClasspathElements>
+                     <additionalClasspathElement>${acceptanceSourceDirectory}/resources
+                     </additionalClasspathElement>
+                 </additionalClasspathElements>
+             </configuration>
+             <executions>
+                 <execution>
+                     <goals>
+                         <goal>integration-test</goal>
+                     </goals>
+                 </execution>
+             </executions>
+         </plugin>
+            <!-- <plugin>
                 <artifactId>maven-failsafe-plugin</artifactId>
                 <version>2.19.1</version>
                 <configuration>
@@ -67,6 +187,10 @@
                         <webdriver.driver>${webdriver.driver}</webdriver.driver>
                         <webdriver.chrome.driver>${webdriver.chrome.driver}</webdriver.chrome.driver>
                     </systemPropertyVariables>
+                    <additionalClasspathElements>
+                                <additionalClasspathElement>${acceptanceSourceDirectory}/resources
+                                </additionalClasspathElement>
+                    </additionalClasspathElements>
                 </configuration>
                 <executions>
                     <execution>
@@ -76,8 +200,8 @@
                         </goals>
                     </execution>
                 </executions>
-            </plugin>
-            <plugin>
+            </plugin> -->
+              <plugin>
         		<groupId>org.apache.maven.plugins</groupId>
         		<artifactId>maven-compiler-plugin</artifactId>
         		<version>3.8.0</version>
@@ -85,11 +209,43 @@
           			<source>1.8</source>
           			<target>1.8</target>
         		</configuration>
-      		</plugin>
+        		<executions>
+                    <execution>
+                        <phase>pre-integration-test</phase>
+                        <goals>
+                            <goal>testCompile</goal>
+                        </goals>
+                        <configuration>
+                            <compilerArguments>
+                                <d>${acceptanceOutputDirectory}</d>
+                            </compilerArguments>
+                        </configuration>
+                    </execution>
+                </executions>
+      		</plugin> 
+      		
+      		<!-- <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.8.0</version>
+                <executions>
+                    <execution>
+                        <phase>pre-integration-test</phase>
+                        <goals>
+                            <goal>testCompile</goal>
+                        </goals>
+                        <configuration>
+                            <compilerArguments>
+                                <d>${acceptanceOutputDirectory}</d>
+                            </compilerArguments>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin> -->
             <plugin>
                 <groupId>net.serenity-bdd.maven.plugins</groupId>
                 <artifactId>serenity-maven-plugin</artifactId>
-                <version>${serenity.version}</version>
+                <version>${serenity.maven.version}</version>
                 <executions>
                     <execution>
                         <id>serenity-reports</id>
@@ -99,6 +255,13 @@
                         </goals>
                     </execution>
                 </executions>
+                 <dependencies>
+                    <dependency>
+                        <groupId>net.serenity-bdd</groupId>
+                        <artifactId>serenity-core</artifactId>
+                        <version>${serenity.version}</version>
+                    </dependency>
+                  </dependencies> 
             </plugin>
         </plugins>
     </build>

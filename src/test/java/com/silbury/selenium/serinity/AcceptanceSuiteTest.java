@@ -10,7 +10,7 @@ import net.thucydides.core.annotations.Managed;
 
 
 @RunWith(CustomSerenityReportingRunner.class)
-public class AcceptanceTestSuite extends SerenityStories 
+public class AcceptanceSuiteTest extends SerenityStories 
 {
 	@Managed(driver = "chrome")
     WebDriver browser;

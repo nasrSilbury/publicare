@@ -8,9 +8,6 @@ public interface Constants {
     String RESOURCES_ROOT = "src" + File.separator + "test" 
     						+ File.separator + "resources" + File.separator;
 
-    //String SELENIUM_CONFIG_PATH = "../../angular4/src/assets/data";
- 
-
     String DOWNLOADPATH = System.getProperty("user.home") + File.separator + "Downloads";
     String DESCENDING = "glyphicon-arrow-up";
     String ASCENDING = "glyphicon-arrow-down";

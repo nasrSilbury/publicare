@@ -19,7 +19,7 @@ public class CustomWebDriver implements DriverSource
     {
         String driver_type = System.getProperty("driver_type");
         
-        logger.debug("driver_type ::::::::::::::::::::::: "+driver_type);
+        logger.debug("driver_type :: "+driver_type);
         String driver_name = System.getProperty("driver_name");
         
         logger.debug("driver_name :: "+driver_name);
@@ -32,7 +32,7 @@ public class CustomWebDriver implements DriverSource
         }
         Constants.DriverType driverType = Constants.DriverType.valueOf(driver_type.toUpperCase());
 
-        logger.info("driverType ::: "+driverType);
+        logger.debug("driverType ::: "+driverType);
 
         switch(driverType)
         {
