@@ -24,9 +24,11 @@ public class DriverFactory {
 
     private static final Logger logger = LoggerFactory.getLogger(DriverFactory.class);
 
-    private static final String browserStackUrl = Constants.DefaultUrl.url;
-        
-
+    // TODO: get access from browserstack for publicare
+    private static final String username = "nasrullahsyed1";
+    private static final String accesskey = "PybExVW91ZGMpP8U4wco";
+    private static final String browserStackUrl = "http://"+username+":"+accesskey+"@hub.browserstack.com/wd/hub";
+    //private static final String url = "http://nasrullahsyed1.browserstack.com";
     private static WebDriver driver = null;
     private static Constants.DriverName driverName;
     private static Constants.SystemType systemType;
@@ -52,11 +54,12 @@ public class DriverFactory {
     {
         driverName = Constants.DriverName.valueOf(webDriverName.toUpperCase());
         
-        logger.debug("driverName :: "+driverName);
         driverType = DriverType.LOCAL;
         switch(driverName)
         {
-            /*case FIREFOX:
+            /*
+             * TODO:
+             * case FIREFOX:
                 setFirefoxDriver();
                 break;*/
             case CHROME:
@@ -71,18 +74,19 @@ public class DriverFactory {
 
      public static WebDriver getRemoteDriverByName(String webDriverName)
     {
-        DriverConfiguration configuration = new DriverConfiguration("drivers/" + webDriverName);
+    	 
+        DriverConfiguration configuration = new DriverConfiguration("drivers"+ File.separator + webDriverName);
         driverType = DriverType.REMOTE;
-        String name = configuration.getString("browser").toUpperCase();
+        String name = configuration.getString("browser").toUpperCase(); 
         driverName = Constants.DriverName.valueOf(name);
         DesiredCapabilities caps = getDesiredCapabilities(configuration);
         try
         {
-            driver = new RemoteWebDriver(new URL(browserStackUrl), caps);
+             driver = new RemoteWebDriver(new URL(browserStackUrl), caps);
         }
         catch(MalformedURLException e)
         {
-            logger.error("Failed to create RemoteWebDriver. Check BrowserStack Url.", e);
+            logger.error("Failed to create RemoteWebDriver. Check BrowserStack Url.", e.getMessage());
         }
         return driver;
     } 
@@ -94,18 +98,22 @@ public class DriverFactory {
          caps.setCapability("project", "Public Care");
 
          String sourceBranch = System.getProperty("sourceBranch");
+         
+   
          if(StringUtils.isNotEmpty(sourceBranch))
          {
              caps.setCapability("name", sourceBranch);
          }
 
          String buildNumber = System.getProperty("BUILD_NUMBER");
+ 
          if(StringUtils.isNotEmpty(buildNumber))
          {
              caps.setCapability("build", buildNumber);
          }
 
          String browser = configuration.getString("browser");
+
          caps.setCapability("browser", browser);
          caps.setCapability("acceptSslCerts", "true");
          caps.setCapability("browserstack.debug", "true");
@@ -117,7 +125,7 @@ public class DriverFactory {
         
       
          driverName = Constants.DriverName.WEBDRIVER;
-       
+        
          systemType = SystemType.DESKTOP;
         
 
@@ -135,6 +143,7 @@ public class DriverFactory {
     private static void checkDriver(String propertyName)
     {
         String driverPath = System.getProperty(propertyName);
+        
         if(driverPath == null)
         {
             logger.error(

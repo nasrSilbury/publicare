@@ -16,10 +16,9 @@ public class DriverConfiguration  extends AbstractConfiguration
 
 	public DriverConfiguration(String driverFile)
     {
-        String pathname = DEFAULT_PATH + driverFile + ".config";
-        
-        logger.debug("pathname :::: "+pathname);
-        File file = new File(pathname);
+        String path = DEFAULT_PATH + driverFile + ".config";
+        logger.info("path :: "+path);
+        File file = new File(path);
         readConfiguration(file);
     }
 }

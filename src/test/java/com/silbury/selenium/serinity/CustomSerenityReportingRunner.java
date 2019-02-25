@@ -24,8 +24,7 @@ public class CustomSerenityReportingRunner extends SerenityReportingRunner
     protected Configuration getConfiguration()
     {
         Configuration configuration = super.getConfiguration();
-        configuration.storyControls().doIgnoreMetaFiltersIfGivenStory(true);
-       
+        configuration.storyControls().doIgnoreMetaFiltersIfGivenStory(true);     
 
         return configuration;
     }

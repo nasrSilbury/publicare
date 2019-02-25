@@ -18,11 +18,9 @@ public class CustomWebDriver implements DriverSource
     public WebDriver newDriver()
     {
         String driver_type = System.getProperty("driver_type");
-        
-        logger.debug("driver_type :: "+driver_type);
+ 
         String driver_name = System.getProperty("driver_name");
-        
-        logger.debug("driver_name :: "+driver_name);
+ 
         if(driver_name == null || driver_type == null)
         {
             logger.error("System Properties 'driver_type' or 'driver_name' is not set\n" +
@@ -31,8 +29,7 @@ public class CustomWebDriver implements DriverSource
             return null;
         }
         Constants.DriverType driverType = Constants.DriverType.valueOf(driver_type.toUpperCase());
-
-        logger.debug("driverType ::: "+driverType);
+ 
 
         switch(driverType)
         {
