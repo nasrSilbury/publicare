@@ -1,1 +1,1 @@
-This is a JBehave Selenium for public care project
+This is a JBehave Selenium for public care project..  
