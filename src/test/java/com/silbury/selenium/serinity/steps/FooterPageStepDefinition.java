@@ -28,6 +28,7 @@ public class FooterPageStepDefinition {
 		assertThat(isVisible, is(true));
 	}
 	
+	@Then("validates the visibility of registration section with registration button")
 	public void evaluateRegistrationAndOrderSection() {
 		boolean isVisible = footerPage.evaluateRegistrationAndOrderSection();
 		assertThat(isVisible, is(true));
