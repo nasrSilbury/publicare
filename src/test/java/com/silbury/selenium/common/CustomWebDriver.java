@@ -20,6 +20,9 @@ public class CustomWebDriver implements DriverSource
         String driver_type = System.getProperty("driver_type");
  
         String driver_name = System.getProperty("driver_name");
+        
+        logger.info("Driver Type :: "+driver_type);
+        logger.info("Driver Name :: "+driver_name);
  
         if(driver_name == null || driver_type == null)
         {
