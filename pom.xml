@@ -5,7 +5,7 @@
     <groupId>com.publicare.selenium</groupId>
     <artifactId>publicare</artifactId>
     <version>1.0-SNAPSHOT</version>
-    <packaging>jar</packaging>
+    <packaging>war</packaging>
 
     <name>Publicare</name>
 
@@ -89,6 +89,7 @@
                 <version>2.19.1</version>
                 <configuration>
                    <!--  <skip>true</skip> -->
+                   <argLine>-Xmx1024m -Xms1024m -XX:MaxPermSize=512m -Djdk.net.URLClassPath.disableClassPathURLCheck=true</argLine>
                     <includes>
                        <include>${acceptanceSourceDirectory}/java/**/*Test.java</include>
                     </includes>
