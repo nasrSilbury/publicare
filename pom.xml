@@ -88,9 +88,10 @@
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>2.19.1</version>
                 <configuration>
-                    <includes>
+                     <includes>
                        <include>${acceptanceSourceDirectory}/java/**/*Test.java</include>
-                    </includes>
+                    </includes>  
+                    <useSystemClassLoader>false</useSystemClassLoader>
                 </configuration>
             </plugin>
             
