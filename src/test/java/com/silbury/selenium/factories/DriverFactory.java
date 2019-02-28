@@ -25,8 +25,8 @@ public class DriverFactory {
     private static final Logger logger = LoggerFactory.getLogger(DriverFactory.class);
 
     // TODO: get access from browserstack for publicare
-    private static final String username = "nasrullahsyed1";
-    private static final String accesskey = "PybExVW91ZGMpP8U4wco";
+    private static final String username = "syednasrullah1";//"nasrullahsyed1";
+    private static final String accesskey = "xAASqabe8qavXxJKPTUp";//"PybExVW91ZGMpP8U4wco";
     private static final String browserStackUrl = "http://"+username+":"+accesskey+"@hub.browserstack.com/wd/hub";
     //private static final String url = "http://nasrullahsyed1.browserstack.com";
     private static WebDriver driver = null;
@@ -83,8 +83,9 @@ public class DriverFactory {
         try
         {
              driver = new RemoteWebDriver(new URL(browserStackUrl), caps);
+             //driver = new ChromeDriver(caps);
         }
-        catch(MalformedURLException e)
+        catch(Exception e)
         {
             logger.error("Failed to create RemoteWebDriver. Check BrowserStack Url.", e.getMessage());
         }
