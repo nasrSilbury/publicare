@@ -89,7 +89,7 @@
                 <version>2.19.1</version>
                 <configuration>
                    <!--  <skip>true</skip> -->
-                    <argLine>-Xmx1024m -Xms1024m -XX:MaxPermSize=512m -Djdk.net.URLClassPath.disableClassPathURLCheck=true</argLine> 
+                   <!--  <argLine>-Xmx1024m -Xms1024m -XX:MaxPermSize=512m -Djdk.net.URLClassPath.disableClassPathURLCheck=true</argLine>  -->
                     <includes>
                        <include>${acceptanceSourceDirectory}/java/**/*Test.java</include>
                     </includes>
